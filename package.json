@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js"
+    "CodeInterpreter": "node index.js",
+    "functionCall": "node functionCall.js"
   },
   "author": "",
   "license": "ISC",

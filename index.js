@@ -12,7 +12,7 @@ import {
 } from './openai.js';
 
 /////////////////////////////
-// 1. Create a new assistant
+// 0. Create a new assistant
 // fileId eg: asst_JL3IS43WvG8FQWDnUYiUdI4m
 /////////////////////////////
 const file = await uploadFile(

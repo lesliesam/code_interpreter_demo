@@ -31,28 +31,28 @@ export async function createAssistant (
     model
   })
 
-  console.log(assistant)
+  console.log('createAssistant ' + assistant)
   return assistant
 }
 
 export async function getAssistantById (assistantId) {
   const assistant = await openai.beta.assistants.retrieve(assistantId)
 
-  console.log(assistant)
+  console.log('getAssistantById ' + assistant)
   return assistant
 }
 
 export async function createChatThread () {
   const chatThread = await openai.beta.threads.create()
 
-  console.log(chatThread)
+  console.log('createChatThread ' + chatThread)
   return chatThread
 }
 
 export async function getChatThreadById (chatThreadId) {
   const thread = await openai.beta.threads.retrieve(chatThreadId)
 
-  console.log(thread)
+  console.log('getChatThreadById ' + thread)
   return thread
 }
 
@@ -62,7 +62,7 @@ export async function createMessageOnThread (threadId, message) {
     message
   )
 
-  console.log(threadMessages)
+  console.log('createMessageOnThread ' + threadMessages)
   return threadMessages
 }
 
@@ -77,23 +77,28 @@ export async function createRun (threadId, assistant_id, stream) {
       console.log(event)
     }
   } else {
-    console.log(run)
+    console.log('createRun ' + run)
   }
 
   return run
 }
 
-export async function listRunByThread(threadId) {
-  const runs = await openai.beta.threads.runs.list(
-    threadId
-  );
+export async function listRunByThread (threadId) {
+  const runs = await openai.beta.threads.runs.list(threadId)
 
-  console.log(runs);
+  console.log('listRunByThread ' + runs)
   if (runs.data.length > 0) {
     return runs.data[0]
   } else {
-    return null;
+    return null
   }
+}
+
+export async function retrieveRun (threadId, runId) {
+  const run = await openai.beta.threads.runs.retrieve(threadId, runId)
+
+  console.log('retrieveRun ' + run)
+  return run
 }
 
 export async function retrieveRunUntilComplete (threadId, runId) {
@@ -119,4 +124,16 @@ export async function listThreadMessages (threadId) {
 
   console.log(JSON.stringify(threadMessages, null, 2))
   return threadMessages
+}
+
+export async function submitToolOutputs(threadId, runId, tool_outputs) {
+  const run = await openai.beta.threads.runs.submitToolOutputs(
+    threadId,
+    runId,
+    {
+      tool_outputs
+    }
+  );
+
+  return run;
 }
